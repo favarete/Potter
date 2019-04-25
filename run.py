@@ -27,7 +27,7 @@ class View():
         footer = urwid.Text(u'TEXT', align='center')
         return [header, body, footer]
 
-    def refresh(self, loop, param):
+    def refresh(self, loop, user_data=None):
         self.view = self.setup_view(self.mount_widgets())
         loop.widget = self.view
         loop.set_alarm_in(1, self.refresh)
@@ -46,7 +46,13 @@ class Timer():
         self.short_rest = short_rest
         self.long_rest = long_rest
 
-screen = View()
-loop = urwid.MainLoop(screen.view, unhandled_input=screen.keyboard)
-loop.set_alarm_in(1, screen.refresh, user_data=None)
-loop.run()
+if __name__ == "__main__":
+    app = View()
+    main_view = app.view
+    keyboard_callback = app.keyboard
+    loop_callback = app.refresh
+    initialization_time = 1
+    
+    loop = urwid.MainLoop(main_view, unhandled_input=keyboard_callback)
+    loop.set_alarm_in(initialization_time, loop_callback)
+    loop.run()
