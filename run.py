@@ -32,6 +32,19 @@ class View():
         loop.widget = self.view
         loop.set_alarm_in(1, self.refresh)
 
+class Timer():
+
+    def __init__(self, timer_name="unamed",
+                 set_size=4, 
+                 pom_time=1500, 
+                 short_rest=300, 
+                 long_rest=1800):
+
+        self.timer_name= timer_name
+        self.set_size = set_size
+        self.pom_time = pom_time
+        self.short_rest = short_rest
+        self.long_rest = long_rest
 
 screen = View()
 loop = urwid.MainLoop(screen.view, unhandled_input=screen.keyboard)
