@@ -1,3 +1,9 @@
+
+
+import os
+print os.path.dirname(os.path.abspath(__file__))
+
+
 import urwid
 def show_or_exit(key):
     if key in ('q', 'Q'):
