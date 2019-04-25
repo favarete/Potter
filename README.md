@@ -8,3 +8,4 @@ TODO:
 - [ ] Put Seconds on Visual Bar
 - [ ] Possibility to Set Another Section Without Reinicialization of App
 - [ ] Restart Timer on Personal Failures (While Doing Tasks)
+- [ ] Expand Widgets in new Classes
