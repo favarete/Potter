@@ -5,7 +5,7 @@ TODO:
 
 - [ ] Add Sound in Each Interval (short break tone, long break tone, finished tone)
 - [ ] Save Habitual Timers to External File
-- [ ] Put Seconds on Visual Bar
+- [x] Put Seconds on Visual Bar
 - [ ] Possibility to Set Another Section Without Reinicialization of App
 - [ ] Restart Timer on Personal Failures (While Doing Tasks)
 - [ ] Expand Widgets in new Classes
