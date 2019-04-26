@@ -15,7 +15,12 @@ class View():
     def __init__(self):
         self.view = self.setup_view(self.default_widgets())
         self.progress_bar = EmptyProgressBar('pg normal', 'pg complete', 0, 60)
-        self.timer = Timer()
+        self.timer = Timer(timer_name="Studying Node JS",
+                           set_size=3,
+                           section_size=1,
+                           pom_time=20, 
+                           short_rest=3, 
+                           long_rest=15)
     
     def keyboard(self, key):
         if key in ('q', 'Q'):
@@ -43,19 +48,17 @@ class View():
 
     def widget_info(self):
 
-        f = lambda n, d: ((n / d) - 1) if d else n
-
         def_sec = self.timer.default_value["section_size"]
         def_set = self.timer.default_value["set_size"]
 
-        din_sec = self.timer.timer_data["section_size"]
-        din_set = self.timer.timer_data["set_size"]
+        din_sec = self.timer.timer_data["actual_section"]
+        din_set = self.timer.timer_data["actual_set"]
 
-        fin_sec = str(f(def_sec, din_sec))
-        fin_set = str(f(def_set, din_set))
+        fin_sec = "finished" if din_sec > def_sec else str(din_sec)
+        fin_set = "finished" if din_set > def_set else str(din_set)
 
-        sections = "SECTION: " + fin_sec + "/" + str(def_sec)
-        sets = "SET: " + fin_set + "/" + str(def_set)
+        sections = "SECTION: " + fin_sec + "/" + def_sec
+        sets = "SET: " + fin_set + "/" + def_set
         
         return urwid.Text(sections + " - " + sets, align='center')
 
@@ -105,7 +108,9 @@ class Timer():
         self.timer_data = {
             "timer_name": timer_name,
             "set_size": set_size,
+            "actual_set": 1,
             "section_size": section_size,
+            "actual_section": 1,
             "pom_time": {
                 "value": (pom_time * UNIT) - 1,
                 "text": "Focus on the Task!",
@@ -115,14 +120,14 @@ class Timer():
             
             "short_rest": {
                 "value": (short_rest * UNIT) - 1,
-                "text": "Short Break",
+                "text": "Short Break and Fixate Concepts",
                 "min": -1,
                 "secs": -1
             },
 
             "long_rest": {
                 "value": (long_rest * UNIT) - 1,
-                "text": "Congrats. take a Long Break!",
+                "text": "Congrats. Take a Long Break and do Something Nice",
                 "min": -1,
                 "secs": -1
             }
@@ -137,8 +142,8 @@ class Timer():
         self.timer_data[step]["secs"] = secs + 1
 
     def run(self):
-        if(self.timer_data["section_size"] > 0):
-            if(self.timer_data["set_size"] > 0):
+        if(self.timer_data["actual_section"] <= self.timer_data["section_size"]):
+            if(self.timer_data["actual_set"] <= self.timer_data["set_size"]):
                 if(self.timer_data["pom_time"]["value"] >= 0):
                     self.set_time("pom_time")
                     return self.timer_data["pom_time"]
@@ -147,7 +152,7 @@ class Timer():
                         self.set_time("short_rest")
                     else:
                         self.set_time("short_rest")
-                        self.timer_data["set_size"] -= 1
+                        self.timer_data["actual_set"] += 1
                         self.timer_data["short_rest"]["value"] = self.default_value["short_rest"]["value"]
                         self.timer_data["pom_time"]["value"] = self.default_value["pom_time"]["value"]
                     return self.timer_data["short_rest"]
@@ -156,8 +161,8 @@ class Timer():
                     self.set_time("long_rest")
                 else:
                     self.set_time("long_rest")
-                    self.timer_data["section_size"] -= 1
-                    self.timer_data["set_size"] = self.default_value["set_size"]
+                    self.timer_data["actual_section"] += 1
+                    self.timer_data["actual_set"] = 1
                     self.timer_data["long_rest"]["value"] = self.default_value["long_rest"]["value"]
                 return self.timer_data["long_rest"]
         else:
