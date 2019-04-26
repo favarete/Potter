@@ -86,7 +86,7 @@ class View():
             loop.widget = self.view
             loop.set_alarm_in(1, self.refresh)
             
-    def finish(self):
+    def finish(self, loop, user_data=None):
         raise urwid.ExitMainLoop()
 
 class EmptyProgressBar(urwid.ProgressBar):
@@ -96,11 +96,11 @@ class EmptyProgressBar(urwid.ProgressBar):
 class Timer():
 
     def __init__(self, timer_name="unamed",
-                 set_size=2,
-                 section_size=2, 
-                 pom_time=1, 
-                 short_rest=1, 
-                 long_rest=2):
+                 set_size=3,
+                 section_size=1, 
+                 pom_time=20, 
+                 short_rest=3, 
+                 long_rest=20):
 
         self.timer_data = {
             "timer_name": timer_name,
