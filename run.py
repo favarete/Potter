@@ -57,8 +57,8 @@ class View():
         fin_sec = "finished" if din_sec > def_sec else str(din_sec)
         fin_set = "finished" if din_set > def_set else str(din_set)
 
-        sections = "SECTION: " + fin_sec + "/" + def_sec
-        sets = "SET: " + fin_set + "/" + def_set
+        sections = "SECTION: " + fin_sec + "/" + str(def_sec)
+        sets = "SET: " + fin_set + "/" + str(def_set)
         
         return urwid.Text(sections + " - " + sets, align='center')
 
