@@ -15,7 +15,7 @@ class View():
     def __init__(self):
         self.view = self.setup_view(self.default_widgets())
         self.progress_bar = EmptyProgressBar('pg normal', 'pg complete', 0, 60)
-        self.timer = Timer(timer_name="Studying Node JS",
+        self.timer = Timer(timer_name="Working on Task",
                            set_size=3,
                            section_size=1,
                            pom_time=20, 
